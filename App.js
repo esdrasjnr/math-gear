@@ -1,21 +1,72 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Icon } from "react-native-elements";
+import Ratio from "./src/screens/Ratio";
+import SpurGear from "./src/screens/SpurGear";
+import HelicalGear from "./src/screens/HelicalGear";
+import Developers from "./src/screens/Developers";
 
-export default function App() {
+const Tab = createBottomTabNavigator();
+
+export default () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            switch (route.name) {
+              case "Rel. transmissão":
+                return (
+                  <Icon
+                    name="cogs"
+                    type="font-awesome"
+                    color={color}
+                    size={size}
+                  />
+                );
+              case "Dentes retos":
+                return (
+                  <Icon
+                    name="cog"
+                    type="font-awesome"
+                    color={color}
+                    size={size}
+                  />
+                );
+              case "Dentes helicoidais":
+                return (
+                  <Icon
+                    name="propeller-4"
+                    type="fontisto"
+                    color={color}
+                    size={size}
+                  />
+                );
+              case "Desenvolvedores":
+                return (
+                  <Icon
+                    name="users"
+                    type="font-awesome"
+                    color={color}
+                    size={size}
+                  />
+                );
+              default:
+                return null;
+            }
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "tomato",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen name="Desenvolvedores" component={Developers} />
+        <Tab.Screen name="Rel. transmissão" component={Ratio} />
+        <Tab.Screen name="Dentes retos" component={SpurGear} />
+        <Tab.Screen name="Dentes helicoidais" component={HelicalGear} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
